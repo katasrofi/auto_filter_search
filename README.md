@@ -9,6 +9,15 @@ Install the selenium library
 pip install selenium
 `
 
+Or you can create new environment
+
+`
+python3 -m venv search
+
+source search/bin/activate
+
+pip install selenium
+`
 
 Download the driver, if you use firefox download the [geckodriver](https://github.com/mozilla/geckodriver/releases) and if you use chrome you can download [chromdriver](https://getwebdriver.com/chromedriver#stable)
 
@@ -37,14 +46,10 @@ chmod +x chromdriver # chrome
 `
 
 Edit the .bashrc or .zshrc
-`
-alias s="python /path/to/multi_search_chrome.py" # Chrome
-`
 
 `
-alias s="python /path/to/multi_search_firefox.py" # Firefox
+alias s="python /path/to/multi_search.py"
 `
-
 
 save and source .bashrc or .zshrc
 For test that open the terminal and type 
@@ -52,5 +57,30 @@ For test that open the terminal and type
 `s The query what you want to find`
 
 
-Note: This tools only search in reddit, medium and stackoverflow, if you want add site to search you can add by edit sites = ["reddit.com", "stackoverflow.com", "medium.com", "Add Site you want"] in python file
+## Features
+
+| Option | Description |
+|--------|-------------|
+| `-a`   | Add new sites into config file (permanent)|
+| `-s`   | Change the default search engine (temporary)|
+| `-d`   | Change default browser (Choice only: `firefox` or `chrome`) (temporary) |
+| `-D`   | Delete the sites from config.json (permanent)|
+
+example:
+
+`
+s query -a huggingface.com
+`
+
+`
+s query -s duckduckgo.com
+`
+
+`
+s query -d chrome
+`
+
+`
+s query -D huggingface.com
+`
 

@@ -28,7 +28,7 @@ if __name__ == "__main__":
         query = input("Masukkan query pencarian: ")
 
     # Inisialisasi driver untuk Firefox sekali
-    path = '/usr/local/bin/geckodriver'
+    path = '/usr/local/bin/chromedriver'
     service = Service(executable_path=path)
     options = Options()
     options.add_argument('--incognito')

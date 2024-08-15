@@ -13,9 +13,13 @@ Or you can create new environment
 
 `
 python3 -m venv search
+`
 
+`
 source search/bin/activate
+`
 
+`
 pip install selenium
 `
 

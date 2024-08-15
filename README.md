@@ -45,6 +45,7 @@ alias s="python /path/to/multi_search_chrome.py" # Chrome
 alias s="python /path/to/multi_search_firefox.py" # Firefox
 `
 
+
 Note: This tools only search in reddit, medium and stackoverflow, if you want add site to search you can add by edit sites = ["reddit.com", "stackoverflow.com", "medium.com", "Add Site you want"] in python file
 
 save and source .bashrc or .zshrc

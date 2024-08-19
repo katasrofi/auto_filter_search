@@ -13,9 +13,13 @@ Or you can create new environment
 
 `
 python3 -m venv search
+`
 
+`
 source search/bin/activate
+`
 
+`
 pip install selenium
 `
 
@@ -52,6 +56,7 @@ alias s="python /path/to/multi_search.py"
 `
 
 save and source .bashrc or .zshrc
+
 For test that open the terminal and type 
 
 `s The query what you want to find`

@@ -5,31 +5,37 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from func import save_config, load_config
 import time
 import os
-import json
 
-CONFIG_FILE = 'config.json'
+# Path to absolute dir
+scrip_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Create function to load config file
-def load_config():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r') as f:
-            return json.load(f)
-    else:
-        return {"sites": ["reddit.com", "stackoverflow.com", "medium.com"]}
+# Join the path to Config File
+CONFIG_FILE = os.path.join(scrip_dir, 'config', 'config.json')
 
-# Function for saving new site
-def save_config(config):
-    with open(CONFIG_FILE, 'w') as f:
-        json.dump(config, f, indent=4)
+# VPN Extensions
+vpn_extension = os.path.join(scrip_dir, 'extensions', 'uvpn_unlimited_vpn-7.1.6.xpi')
 
+# Make a function to open the browser
 def search_with_selenium(driver, query, site, first_search=False):
     # Create URL search with special filter
     search_url = f"https://www.{search_engine}/search?q=site:{site} {query}"
 
     if first_search:
+        # Install the vpn
+        driver.install_addon(vpn_extension, temporary=True)
+
+        # Close the tab installations
+        search_window = driver.current_window_handle
+        for handle in driver.window_handles:
+            if handle != search_window:
+                driver.switch_to.window(handle)
+                driver.close()
+
         # Open URL in first windows
+        driver.switch_to.window(search_window)
         driver.get(search_url)
     else:
         # Open URL in new tab
@@ -40,6 +46,7 @@ def search_with_selenium(driver, query, site, first_search=False):
 
     time.sleep(2)
 
+# Declare the app
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Search with Selenium and filter sites.")
 
@@ -61,19 +68,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Load the config
-    config = load_config()
+    config = load_config(CONFIG_FILE)
 
     # Add sites
     if args.add_site:
         config['sites'].append(args.add_site)
-        save_config(config)
+        save_config(CONFIG_FILE, config)
         print(f'Site {args.add_site} added to the config')
 
     # Delete sites
     if args.delete:
         if args.delete in config["sites"]:
             config["sites"].remove(args.delete)
-            save_config(config)
+            save_config(CONFIG_FILE, config)
             print(f'Site {args.delete} remove from the config')
 
         else:

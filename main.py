@@ -93,16 +93,34 @@ if __name__ == "__main__":
 
     # Declare default browser
     if args.default_browser == "firefox":
+        # Path to GeckoDriver
         path = '/usr/local/bin/geckodriver'
+
+        # Path to Profile
+        profile_path = "~/.mozilla/firefox/*.default"
+
+        # Declare the Service and Options
         service = FirefoxService(executable_path=path)
         options = FirefoxOptions()
+
+        # Set the argument
+        options.set_preference("profile", profile_path)
         options.add_argument('--incognito')
+
+        # Execute the driver
         driver = webdriver.Firefox(service=service, options=options)
     elif args.default_browser == "chrome":
+        # Path to ChromeDriver
         path = '/usr/local/bin/chromedriver'
+
+        # Declare the Service and Options
         service = ChromeService(executable_path=path)
         options = ChromeOptions()
+
+        # Set The argument
         options.add_argument('--incognito')
+
+        # Execute the driver
         driver = webdriver.Chrome(service=service, options=options)
 
     # Determine the search engine
